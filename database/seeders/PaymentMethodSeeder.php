@@ -1,6 +1,5 @@
 <?php
 
-// database/seeders/PaymentMethodSeeder.php
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
@@ -10,23 +9,45 @@ class PaymentMethodSeeder extends Seeder
 {
     public function run(): void
     {
+        /**
+         * 1️⃣ Online / Bank Transfer
+         */
         PaymentMethod::updateOrCreate(
+            ['code' => 'online_transfer'],
             [
-                'name'                => 'Online Transfer / Bank Transfer',
-                'short_description'   => 'Transfer to our company bank account & upload receipt', // 👈 新增
-                'code'                => 'online_transfer',                                       // 👈 建议一定要有
-
+                'name'                => 'Direct Payment',
+                'short_description'   => 'Transfer to our company bank account & upload receipt',
                 'is_active'           => true,
                 'is_default'          => true,
 
                 'bank_name'           => 'Maybank',
-                'bank_account_name'   => 'E-Commerce Sdn Bhd',
-                'bank_account_number' => '1234567890',
+                'bank_account_name'   => 'Ecommerce',
+                'bank_account_number' => '1234567789',
 
-                'duitnow_qr_path'     => null, // 之后 admin 上传 QR 图片更新
+                'duitnow_qr_path'     => null,
                 'instructions'        => 'Please transfer the total amount and upload your payment receipt.',
             ]
+        );
 
+        /**
+         * 2️⃣HitPay (Online Payment / E-Wallet)
+         */
+        PaymentMethod::updateOrCreate(
+            ['code' => 'hitpay'],
+            [
+                'name'              => 'Online Payment',
+                'short_description' => 'Pay securely via Touch ’n Go, GrabPay, ShopeePay, FPX & more',
+                'is_active'         => true,
+                'is_default'        => false,
+
+                // ❌ 不需要银行信息
+                'bank_name'           => null,
+                'bank_account_name'   => null,
+                'bank_account_number' => null,
+                'duitnow_qr_path'     => null,
+
+                'instructions' => 'You will be redirected to a secure payment page to complete your payment.',
+            ]
         );
     }
 }
