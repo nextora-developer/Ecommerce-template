@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="bg-[#F8F8F9] min-h-screen font-sans antialiased text-gray-900 py-6 sm:py-10">
+    <div class="bg-[#FAF9F6] min-h-screen font-sans antialiased text-gray-900 py-6 sm:py-10">
         <div class="max-w-7xl5 mx-auto px-4 sm:px-6 lg:px-8">
 
             {{-- Breadcrumb --}}
@@ -57,99 +57,107 @@
                                         @if ($isFavorited)
                                             @method('DELETE')
                                         @endif
+
                                         <button type="submit"
-                                            class="w-11 h-11 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-md shadow-sm border border-white hover:scale-110 transition-all duration-300">
+                                            class="w-11 h-11 flex items-center justify-center rounded-full
+                       bg-white/80 backdrop-blur-md shadow-sm border border-white
+                       hover:scale-110 transition-all duration-300">
                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                 fill="{{ $isFavorited ? '#D4AF37' : 'none' }}"
                                                 stroke="{{ $isFavorited ? '#D4AF37' : '#8f6a10' }}" stroke-width="1.5"
                                                 viewBox="0 0 24 24" class="h-6 w-6">
-                                                <path
-                                                    d="M12 21.35l-1.45-1.32C5.4 15.36
-                                                                                           2 12.28 2 8.5 2 5.42 4.42
-                                                                                           3 7.5 3c1.74 0 3.41.81 4.5
-                                                                                           2.09C13.09 3.81 14.76 3 16.5
-                                                                                           3 19.58 3 22 5.42 22 8.5c0
-                                                                                           3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                                                <path d="M12 21.35l-1.45-1.32C5.4 15.36
+                                           2 12.28 2 8.5 2 5.42 4.42
+                                           3 7.5 3c1.74 0 3.41.81 4.5
+                                           2.09C13.09 3.81 14.76 3 16.5
+                                           3 19.58 3 22 5.42 22 8.5c0
+                                           3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                                             </svg>
                                         </button>
                                     </form>
                                 @endauth
-                                <div data-gallery class="relative">
-                                    {{-- Main Image Display（已缩小调整） --}}
-                                    <div
-                                        class="relative rounded-3xl overflow-hidden aspect-[4/3] max-h-[520px] bg-white shadow-inner mb-6">
 
-                                        <div class="flex h-full transition-transform duration-700 ease-out"
-                                            data-gallery-track>
-                                            @foreach ($gallery as $url)
-                                                <div class="w-full h-full shrink-0">
-                                                    @if ($url)
-                                                        <img src="{{ $url }}"
-                                                            class="w-full h-full object-contain select-none"
-                                                            alt="{{ $product->name }}">
-                                                    @else
-                                                        <div
-                                                            class="w-full h-full flex flex-col items-center justify-center text-gray-300 bg-gray-50">
-                                                            <svg class="w-10 h-10 mb-2 opacity-20" fill="none"
-                                                                stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path
-                                                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
-                                                            </svg>
-                                                            <span class="text-xs tracking-widest uppercase">
-                                                                Image Coming Soon
-                                                            </span>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
+                                {{-- 🔳 Main Gallery (Square & Centered) --}}
+                                <div class="flex justify-center mb-6">
+                                    <div class="relative rounded-[28px] p-[2px] bg-[#D4AF37]">
+                                        <div
+                                            class="relative w-full max-w-[520px] aspect-square rounded-3xl overflow-hidden bg-white shadow-inner">
+                                            <div class="flex h-full transition-transform duration-700 ease-out"
+                                                data-gallery-track>
+                                                @foreach ($gallery as $url)
+                                                    <div class="w-full h-full shrink-0">
+                                                        @if ($url)
+                                                            <img src="{{ $url }}"
+                                                                class="w-full h-full object-contain select-none"
+                                                                alt="{{ $product->name }}">
+                                                        @else
+                                                            <div
+                                                                class="w-full h-full flex flex-col items-center justify-center text-gray-300 bg-gray-50">
+                                                                <svg class="w-10 h-10 mb-2 opacity-20" fill="none"
+                                                                    stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <path
+                                                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16 m-2-2l1.586-1.586a2 2 0 012.828 0L20 14" />
+                                                                </svg>
+                                                                <span class="text-xs tracking-widest uppercase">
+                                                                    Image Coming Soon
+                                                                </span>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            {{-- ⬅️➡️ Navigation --}}
+                                            @if (count($gallery) > 1)
+                                                <button type="button"
+                                                    class="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2
+                                                w-9 h-9 rounded-full bg-black/45 hover:bg-black/70
+                                                text-white items-center justify-center text-sm shadow
+                                                backdrop-blur-sm transition"
+                                                    data-gallery-prev>
+                                                    ‹
+                                                </button>
+
+                                                <button type="button"
+                                                    class="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2
+                                                w-9 h-9 rounded-full bg-black/45 hover:bg-black/70
+                                                text-white items-center justify-center text-sm shadow
+                                                backdrop-blur-sm transition"
+                                                    data-gallery-next>
+                                                    ›
+                                                </button>
+                                            @endif
+
                                         </div>
                                     </div>
-
-                                    {{-- 左右按钮 --}}
-                                    @if (count($gallery) > 1)
-                                        <button type="button"
-                                            class="hidden sm:flex absolute left-3 top-1/2 -translate-y-1/2
-                   w-9 h-9 rounded-full bg-black/45 hover:bg-black/70
-                   text-white items-center justify-center text-sm shadow
-                   backdrop-blur-sm transition"
-                                            data-gallery-prev>
-                                            ‹
-                                        </button>
-
-                                        <button type="button"
-                                            class="hidden sm:flex absolute right-3 top-1/2 -translate-y-1/2
-                   w-9 h-9 rounded-full bg-black/45 hover:bg-black/70
-                   text-white items-center justify-center text-sm shadow
-                   backdrop-blur-sm transition"
-                                            data-gallery-next>
-                                            ›
-                                        </button>
-                                    @endif
-
-                                    {{-- Thumbnails --}}
-                                    @if (count($gallery) > 1)
-                                        <div class="flex gap-4 justify-center" data-gallery-thumbs>
-                                            @foreach ($gallery as $i => $url)
-                                                <button type="button" data-thumb-index="{{ $i }}"
-                                                    class="group relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all {{ $loop->first ? 'border-[#D4AF37]' : 'border-transparent' }}">
-                                                    @if ($url)
-                                                        <img src="{{ $url }}"
-                                                            class="w-full h-full object-cover">
-                                                    @else
-                                                        <div
-                                                            class="w-full h-full flex items-center justify-center text-xs text-gray-400">
-                                                            -
-                                                        </div>
-                                                    @endif
-                                                    <div
-                                                        class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition">
-                                                    </div>
-                                                </button>
-                                            @endforeach
-                                        </div>
-                                    @endif
                                 </div>
+
+                                {{-- 🖼 Thumbnails --}}
+                                @if (count($gallery) > 1)
+                                    <div class="flex gap-4 justify-center" data-gallery-thumbs>
+                                        @foreach ($gallery as $i => $url)
+                                            <button type="button" data-thumb-index="{{ $i }}"
+                                                class="group relative w-20 h-20 rounded-2xl overflow-hidden
+                           border-2 transition-all
+                           {{ $loop->first ? 'border-[#D4AF37]' : 'border-transparent' }}">
+                                                @if ($url)
+                                                    <img src="{{ $url }}" class="w-full h-full object-cover">
+                                                @else
+                                                    <div
+                                                        class="w-full h-full flex items-center justify-center text-xs text-gray-400">
+                                                        -
+                                                    </div>
+                                                @endif
+                                                <div
+                                                    class="absolute inset-0 bg-black/5 group-hover:bg-transparent transition">
+                                                </div>
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                @endif
+
                             </div>
+
                         </div>
                     </div>
 
@@ -200,39 +208,126 @@
                                 </div>
                             </div>
 
-                            {{-- Feature Bar / 信任条 --}}
-                            <div class="grid grid-cols-2 gap-4 mb-6">
+                            {{-- Feature Bar / 信任条（Dynamic from Admin Highlights） --}}
+                            @php
+                                $highlightMap = [
+                                    'ships_1_3' => [
+                                        'text' => 'Ships in 1–3 working days',
+                                        'icon' => 'check',
+                                        'text_class' => 'text-[#8f6a10]',
+                                    ],
+                                    'returns_7' => [
+                                        'text' => 'Easy returns within 7 days',
+                                        'icon' => 'return',
+                                        'text_class' => 'text-gray-600',
+                                    ],
+                                    'authentic' => [
+                                        'text' => '100% Authentic guarantee',
+                                        'icon' => 'badge',
+                                        'text_class' => 'text-[#8f6a10]',
+                                    ],
+                                    'support' => [
+                                        'text' => 'Friendly customer support',
+                                        'icon' => 'support',
+                                        'text_class' => 'text-gray-600',
+                                    ],
+                                    'secure' => [
+                                        'text' => 'Secure payment checkout',
+                                        'icon' => 'lock',
+                                        'text_class' => 'text-[#8f6a10]',
+                                    ],
+                                    'cod' => [
+                                        'text' => 'Cash on delivery available',
+                                        'icon' => 'cash',
+                                        'text_class' => 'text-gray-600',
+                                    ],
+                                    'pickup' => [
+                                        'text' => 'Self-pickup available',
+                                        'icon' => 'pickup',
+                                        'text_class' => 'text-gray-600',
+                                    ],
+                                    'warranty' => [
+                                        'text' => 'Warranty included (if applicable)',
+                                        'icon' => 'warranty',
+                                        'text_class' => 'text-gray-600',
+                                    ],
+                                ];
+                            @endphp
 
-                                <div
-                                    class="flex items-center gap-3 p-3 rounded-2xl
-                                            bg-[#D4AF37]/10 border border-[#D4AF37]/20">
-                                    <div class="p-2 bg-white rounded-xl shadow-sm">
-                                        <svg class="w-4 h-4 text-[#8f6a10]" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24" stroke-width="1.8">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                    <span class="text-[12px] font-medium text-[#8f6a10]">
-                                        Ships in 1–3 working days
-                                    </span>
+                            @if (!empty($product->highlights) && is_array($product->highlights))
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    @foreach ($product->highlights as $key)
+                                        @php $h = $highlightMap[$key] ?? null; @endphp
+                                        @continue(!$h)
+
+                                        <div
+                                            class="flex items-center gap-3 p-3 rounded-2xl bg-[#D4AF37]/10 border border-[#D4AF37]/20">
+                                            <div class="p-2 bg-white rounded-xl shadow-sm">
+                                                {{-- Icons --}}
+                                                @if ($h['icon'] === 'check')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'return')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'lock')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.9" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'support')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M20.25 8.511c.884.284 1.5 1.128 1.5 2.097v4.286c0 1.136-.847 2.1-1.98 2.193-.34.027-.68.052-1.02.072v3.091l-3-3c-1.354 0-2.694-.055-4.02-.163a2.115 2.115 0 0 1-.825-.242m9.345-8.334a2.126 2.126 0 0 0-.476-.095 48.64 48.64 0 0 0-8.048 0c-1.131.094-1.976 1.057-1.976 2.192v4.286c0 .837.46 1.58 1.155 1.951m9.345-8.334V6.637c0-1.621-1.152-3.026-2.76-3.235A48.455 48.455 0 0 0 11.25 3c-2.115 0-4.198.137-6.24.402-1.608.209-2.76 1.614-2.76 3.235v6.226c0 1.621 1.152 3.026 2.76 3.235.577.075 1.157.14 1.74.194V21l4.155-4.155" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'cash')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'pickup')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'warranty')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]"
+                                                        xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                                                    </svg>
+                                                @elseif($h['icon'] === 'badge')
+                                                    <svg class="w-4 h-4 text-[#8f6a10]" fill="none"
+                                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6z" />
+                                                    </svg>
+                                                @endif
+                                            </div>
+
+                                            <span class="text-[12px] font-medium {{ $h['text_class'] }}">
+                                                {{ $h['text'] }}
+                                            </span>
+                                        </div>
+                                    @endforeach
                                 </div>
-
-                                <div
-                                    class="flex items-center gap-3 p-3 rounded-2xl
-                                            bg-[#D4AF37]/10 border border-[#D4AF37]/20">
-                                    <div class="p-2 bg-white rounded-xl shadow-sm">
-                                        <svg class="w-4 h-4 text-[#8f6a10]" fill="none" stroke="currentColor"
-                                            viewBox="0 0 24 24" stroke-width="1.8">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M16 15v-1a4 4 0 00-4-4H8m0 0l3 3m-3-3l3-3" />
-                                        </svg>
-                                    </div>
-                                    <span class="text-[12px] font-medium text-gray-600">
-                                        Easy returns within 7 days
-                                    </span>
-                                </div>
-
-                            </div>
+                            @endif
 
 
                             {{-- Short Description --}}
@@ -336,7 +431,6 @@
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     </div>
                 </div>
@@ -349,16 +443,44 @@
                     class="bg-white rounded-[2rem] border border-gray-100 shadow-[0_18px_40px_rgba(0,0,0,0.04)] p-6 sm:p-8">
 
                     {{-- Tabs Header --}}
-                    <div class="flex justify-center gap-12 border-b border-gray-100 mb-8">
+                    <div class="flex justify-center gap-6 sm:gap-12 border-b border-gray-100 mb-8">
                         <button onclick="switchTab('desc')" id="tab-btn-desc"
-                            class="pb-4 text-sm font-bold uppercase tracking-widest border-b-2 border-[#D4AF37] text-gray-900">
+                            class="pb-3 sm:pb-4
+               text-[11px] sm:text-sm
+               font-bold uppercase tracking-widest
+               text-center leading-tight
+               max-w-[80px] sm:max-w-none
+               border-b-2 border-[#D4AF37]
+               text-gray-900">
                             Long Description
                         </button>
+
                         <button onclick="switchTab('info')" id="tab-btn-info"
-                            class="pb-4 text-sm font-bold uppercase tracking-widest border-b-2 border-transparent text-gray-400 hover:text-gray-900 transition">
+                            class="pb-3 sm:pb-4
+               text-[11px] sm:text-sm
+               font-bold uppercase tracking-widest
+               text-center leading-tight
+               max-w-[80px] sm:max-w-none
+               border-b-2 border-transparent
+               text-gray-400 hover:text-gray-900 transition">
                             Additional Info
                         </button>
+
+                        <button onclick="switchTab('review')" id="tab-btn-review"
+                            class="pb-3 sm:pb-4
+               text-[11px] sm:text-sm
+               font-bold uppercase tracking-widest
+               text-center leading-tight
+               max-w-[80px] sm:max-w-none
+               border-b-2 border-transparent
+               text-gray-400 hover:text-gray-900 transition">
+                            Reviews
+                            <span class="ml-1 text-[10px] sm:text-[11px] font-black text-gray-300">
+                                ({{ $reviewCount ?? 0 }})
+                            </span>
+                        </button>
                     </div>
+
 
                     {{-- Description Tab --}}
                     <div id="tab-desc" class="prose prose-base max-w-none text-gray-600 leading-relaxed">
@@ -401,16 +523,13 @@
                             </p>
                         @endif
                     </div>
-
-
                 </div>
             </div>
 
-
             {{-- Related Products --}}
             @if ($related->count())
-                <div class="mt-12">
-                    <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                <div class="mt-14">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-5">
                         Related Products
                     </h2>
 
@@ -422,97 +541,85 @@
                                     : false;
                             @endphp
 
-                            <a href="{{ route('shop.show', $item->slug) }}"
-                                class="group bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-[#D4AF37]/60 transition overflow-hidden flex flex-col">
-                                {{-- Product image --}}
-                                <div class="relative aspect-square bg-gray-100 overflow-hidden">
-                                    @if ($item->image ?? false)
+                            <div
+                                class="group relative flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:border-[#D4AF37]/40 transition-all duration-500 overflow-hidden">
+
+                                {{-- Image --}}
+                                <a href="{{ route('shop.show', $item->slug) }}"
+                                    class="relative aspect-square overflow-hidden bg-gray-50">
+                                    @if ($item->image)
                                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}"
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                            loading="lazy"
+                                            class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out">
                                     @else
                                         <div
-                                            class="w-full h-full flex items-center justify-center text-xs text-gray-400">
-                                            Image coming soon
+                                            class="w-full h-full flex items-center justify-center bg-gray-50 text-[10px] uppercase tracking-widest text-gray-400">
+                                            No Image Available
                                         </div>
                                     @endif
 
-                                    {{-- ❤️ Favorite --}}
-                                    @auth
-                                        <form
-                                            action="{{ $itemFavorited ? route('account.favorites.destroy', $item) : route('account.favorites.store', $item) }}"
-                                            method="POST" class="absolute top-2 right-2 z-20">
-                                            @csrf
-                                            @if ($itemFavorited)
-                                                @method('DELETE')
-                                            @endif
-
-                                            <button type="submit"
-                                                class="w-8 h-8 flex items-center justify-center rounded-full bg-white/80 backdrop-blur hover:bg-white shadow-sm">
-                                                @if ($itemFavorited)
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="#D4AF37"
-                                                        viewBox="0 0 24 24" class="h-5 w-5">
-                                                        <path
-                                                            d="M12 21.35l-1.45-1.32C5.4 15.36
-                                                                                                   2 12.28 2 8.5 2 5.42 4.42
-                                                                                                   3 7.5 3c1.74 0 3.41.81 4.5
-                                                                                                   2.09C13.09 3.81 14.76 3 16.5
-                                                                                                   3 19.58 3 22 5.42 22 8.5c0
-                                                                                                   3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                                                    </svg>
-                                                @else
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        stroke="#8f6a10" stroke-width="1.8" viewBox="0 0 24 24"
-                                                        class="h-5 w-5">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M21 8.5c0-2.8-2.2-5-5-5-1.9
-                                                                                                     0-3.6 1-4.5 2.5C10.6 4.5
-                                                                                                     8.9 3.5 7 3.5 4.2 3.5 2
-                                                                                                     5.7 2 8.5c0 5.2 5.5 8.9
-                                                                                                     9.8 12.7.1.1.3.1.4 0C15.5
-                                                                                                     17.4 21 13.7 21 8.5z" />
-                                                    </svg>
-                                                @endif
-                                            </button>
-                                        </form>
-                                    @endauth
-
+                                    {{-- Subtle Overlay --}}
                                     <div
-                                        class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition">
+                                        class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500">
                                     </div>
-                                </div>
+                                </a>
+
+                                {{-- ❤️ Favorite --}}
+                                @auth
+                                    <form
+                                        action="{{ $itemFavorited ? route('account.favorites.destroy', $item) : route('account.favorites.store', $item) }}"
+                                        method="POST" class="absolute top-3 right-3 z-10"
+                                        onclick="event.stopPropagation();">
+                                        @csrf
+                                        @if ($itemFavorited)
+                                            @method('DELETE')
+                                        @endif
+
+                                        <button type="submit"
+                                            onclick="event.preventDefault(); event.stopPropagation(); this.closest('form').submit();"
+                                            class="w-9 h-9 flex items-center justify-center rounded-full bg-white/90 backdrop-blur-sm text-[#8f6a10] shadow-sm hover:bg-white hover:scale-110 transition-all active:scale-95">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                fill="{{ $itemFavorited ? '#D4AF37' : 'none' }}"
+                                                stroke="{{ $itemFavorited ? '#D4AF37' : 'currentColor' }}"
+                                                stroke-width="1.8" viewBox="0 0 24 24" class="h-5 w-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                                            </svg>
+                                        </button>
+                                    </form>
+                                @endauth
 
                                 {{-- Content --}}
-                                <div class="flex-1 flex flex-col px-3.5 py-3">
-                                    <p class="text-xs uppercase tracking-[0.18em] text-gray-400 mb-1">
-                                        {{ $item->category->name ?? 'Product' }}
-                                    </p>
+                                <div class="flex-1 flex flex-col p-4">
+                                    <a href="{{ route('shop.show', $item->slug) }}" class="block flex-1 group/title">
+                                        <p
+                                            class="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-1.5">
+                                            {{ $item->category->name ?? 'General' }}
+                                        </p>
 
-                                    <h3 class="text-sm font-semibold text-gray-900 line-clamp-2">
-                                        {{ $item->name }}
-                                    </h3>
+                                        <h3
+                                            class="text-sm font-semibold text-gray-900 line-clamp-2 group-hover/title:text-[#8f6a10] transition-colors leading-snug">
+                                            {{ $item->name }}
+                                        </h3>
+                                    </a>
 
-                                    <div
-                                        class="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                                        <p class="text-sm font-semibold text-[#8f6a10]">
+                                    <div class="mt-4 flex flex-col gap-3">
+                                        <p class="text-base font-bold text-gray-900">
                                             RM {{ number_format($item->price, 2) }}
                                         </p>
 
-                                        <span
-                                            class="inline-flex items-center justify-center rounded-full border border-gray-200
-                                                    px-3 py-1.5 text-[11px] font-medium text-gray-700
-                                                    w-full sm:w-auto
-                                                    group-hover:border-[#D4AF37]/70 group-hover:text-[#8f6a10]
-                                                    transition">
-                                            View details
-                                        </span>
+                                        <a href="{{ route('shop.show', $item->slug) }}"
+                                            class="w-full inline-flex items-center justify-center rounded-xl bg-gray-50 border border-gray-200 py-2.5 text-xs font-bold text-gray-700 hover:bg-[#D4AF37] hover:text-white hover:border-[#D4AF37] transition-all duration-300">
+                                            View Details
+                                        </a>
                                     </div>
-
                                 </div>
-                            </a>
+                            </div>
                         @endforeach
                     </div>
                 </div>
             @endif
+
 
         </div>
     </div>
@@ -772,35 +879,37 @@
 
     <script>
         function switchTab(tab) {
-            const desc = document.getElementById('tab-desc');
-            const info = document.getElementById('tab-info');
-            const btnDesc = document.getElementById('tab-btn-desc');
-            const btnInfo = document.getElementById('tab-btn-info');
+            const tabs = {
+                desc: document.getElementById('tab-desc'),
+                info: document.getElementById('tab-info'),
+            };
 
-            if (!desc || !info || !btnDesc || !btnInfo) return;
+            const btns = {
+                desc: document.getElementById('tab-btn-desc'),
+                info: document.getElementById('tab-btn-info'),
+            };
 
-            if (tab === 'desc') {
-                // 显示 Long Description
-                desc.classList.remove('hidden');
-                info.classList.add('hidden');
+            // safety
+            if (!tabs.desc || !tabs.info) return;
 
-                // 按钮样式
-                btnDesc.classList.add('text-gray-700', 'border-[#D4AF37]');
-                btnDesc.classList.remove('text-gray-500', 'border-transparent');
+            // hide all
+            Object.values(tabs).forEach(el => el.classList.add('hidden'));
 
-                btnInfo.classList.add('text-gray-500', 'border-transparent');
-                btnInfo.classList.remove('text-gray-700', 'border-[#D4AF37]');
-            } else if (tab === 'info') {
-                // 显示 Additional Info
-                info.classList.remove('hidden');
-                desc.classList.add('hidden');
+            // reset btn style
+            Object.values(btns).forEach(btn => {
+                if (!btn) return;
+                btn.classList.add('text-gray-400', 'border-transparent');
+                btn.classList.remove('text-gray-700', 'border-[#D4AF37]', 'text-gray-900');
+            });
 
-                // 按钮样式
-                btnInfo.classList.add('text-gray-700', 'border-[#D4AF37]');
-                btnInfo.classList.remove('text-gray-500', 'border-transparent');
+            // show selected
+            tabs[tab]?.classList.remove('hidden');
 
-                btnDesc.classList.add('text-gray-500', 'border-transparent');
-                btnDesc.classList.remove('text-gray-700', 'border-[#D4AF37]');
+            // active btn
+            const b = btns[tab];
+            if (b) {
+                b.classList.add('text-gray-900', 'border-[#D4AF37]');
+                b.classList.remove('text-gray-400', 'border-transparent');
             }
         }
     </script>

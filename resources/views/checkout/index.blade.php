@@ -356,17 +356,27 @@
                                                                         </span>
                                                                     </div>
 
+                                                                    {{-- ✅ Account Holder Name --}}
                                                                     <div
-                                                                        class="p-3 bg-[#FDF3D7] border border-[#E6D8A8] rounded-xl sm:col-span-2">
+                                                                        class="p-3 bg-white rounded-xl border border-gray-200">
+                                                                        <span
+                                                                            class="text-[10px] uppercase font-bold text-gray-400 block mb-1">
+                                                                            Account Holder Name
+                                                                        </span>
+                                                                        <span class="font-bold text-gray-900 block">
+                                                                            {{ $method->bank_account_name }}
+                                                                        </span>
+                                                                    </div>
+
+                                                                    <div
+                                                                        class="p-3 bg-[#FDF3D7] border border-[#E6D8A8] rounded-xl">
                                                                         <span
                                                                             class="text-[10px] uppercase font-bold text-[#8f6a10] block mb-1">
                                                                             Exact Amount to Pay
                                                                         </span>
-
-                                                                        <span
-                                                                            class="text-xl font-black text-[#8f6a10]">
-                                                                            RM <span
-                                                                                data-transfer-amount>{{ number_format($subtotal, 2) }}</span>
+                                                                        <span class="text-xl font-black text-[#8f6a10]"
+                                                                            data-pay-amount>
+                                                                            RM 0.00
                                                                         </span>
                                                                     </div>
 
@@ -426,6 +436,54 @@
                                                                                 transition">
                                                                 </div>
 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                @if ($isHitpay)
+                                                    <div
+                                                        class="mt-4 ml-6 p-5 bg-[#F9FAFB] rounded-2xl border border-gray-200 space-y-4">
+                                                        <div class="flex gap-4">
+                                                            <span
+                                                                class="flex-shrink-0 w-6 h-6 rounded-full bg-[#D4AF37] text-white text-xs font-bold flex items-center justify-center">
+                                                                1
+                                                            </span>
+
+                                                            <div>
+                                                                <h4 class="text-sm font-bold text-gray-900 mb-1">
+                                                                    Pay via payment gateway
+                                                                </h4>
+
+                                                                <p
+                                                                    class="text-xs text-gray-500 leading-relaxed max-w-md">
+                                                                    You will be redirected to secure
+                                                                    payment page to complete
+                                                                    your payment. Supported methods include FPX, cards,
+                                                                    and e-wallets.
+                                                                </p>
+
+                                                                <div
+                                                                    class="mt-3 flex items-center gap-3 flex-wrap opacity-80">
+                                                                    <img src="/images/payments/fpx.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/visa.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/mastercard.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/tng.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/grabpay.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/grabpaylater.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/shopeepay.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/spaylater.png"
+                                                                        class="h-7">
+                                                                    <img src="/images/payments/alipay.png"
+                                                                        class="h-7">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
